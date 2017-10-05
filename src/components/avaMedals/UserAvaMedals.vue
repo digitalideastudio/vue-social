@@ -26,7 +26,7 @@
                 <template v-else>
                     <div class="medallion medallion__no-name"
                          :class="{'medallion--transition':transition}"
-                         :style = "{'background-color': randomBackgroundColor(item.name, backgroundColors)}"
+                         :style = "{'background-color': randomBackgroundColor(item.email, backgroundColors)}"
                     >@</div>
                     <div class="medallion__tooltip">
                         {{item.email}}
@@ -59,20 +59,37 @@
     const UserAvaMedals = {
         props: {
             volunteers: {
-//                type    : [],
-//                required: true,
+                type    : [],
+                required: true,
+                default() {
+                    return {
+                        [{  'id'           : 1,
+                            'name'         : 'Sylvester Roch',
+                            'profile_photo': 'https://robohash.org/ullamutquam.png?size=50x50&set=set1',
+                            'email'        : 'sroch0@bbc.co.uk',
+                            'url'          : 'https://bravesites.com'}]
+                    };
+                },
+            },
+            size: {
+                type    : Number,
+                required: false,
+                default : 3, //rem
             },
             thisCount: {
-                type   : Number,
-                default: 8,
+                type    : Number,
+                required: false,
+                default : 8,
             },
             transition: {
-                type   : Boolean,
-                default: true,
+                type    : Boolean,
+                required: false,
+                default : false,
             },
             theme: {
                 type   : String,
-                default: 'info',
+                required: false,
+                default: 'primary', // see $colors in _theme.scss
             },
         },
         data() {
