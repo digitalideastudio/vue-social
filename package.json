@@ -1,14 +1,14 @@
 {
-  "name": "vue-social",
+  "name": "vue-social-components",
   "version": "0.1.0",
   "description": "Social components plugin for Vue.js",
   "author": "Serhii Matrunchyk <serhii@digitalidea.studio>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalideastudio/vue-social.git"
+    "url": "https://github.com/digitalideastudio/vue-social-components.git"
   },
-  "bugs": "https://github.com/digitalideastudio/vue-social/issues",
+  "bugs": "https://github.com/digitalideastudio/vue-social-components/issues",
   "main": "dist/main.js",
   "scripts": {
     "dev": "node build/dev-server.js",
