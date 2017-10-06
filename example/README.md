@@ -1,6 +1,6 @@
-# vue-social-test
+# vue-social-components-test
 
-> vue-social package test suite
+> vue-social-components package test suite
 
 ## Build Setup
 

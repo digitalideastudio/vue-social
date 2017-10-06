@@ -1,4 +1,4 @@
-# vue-social
+# vue-social-components
 
 > Social components plugin for Vue.js
 
