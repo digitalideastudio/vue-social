@@ -1,61 +1,62 @@
 <template>
-      <div class="user-ava-medallions">
-            <a
-                class  = "medallion__box"
-                :class = "{'medallion__box--transition':transition}"
-                v-for  = "(item, index) in volunteers"
-                v-if   = "index < thisCount"
-                :key   = "item.id"
-                :href  = "item.name ? item.url : 'javascript:void(0)'"
-            >
-                <template v-if="item.name ">
-                    <div class="medallion"
-                         v-if="item.profile_photo"
-                         :class="{'medallion--transition':transition}"
-                         :style = "{'background-image': `url(${item.profile_photo})`}"
-                    ></div>
-                    <div v-else
-                         class="medallion medallion__no-profile-photo"
-                         :style = "{'background-color': randomBackgroundColor(item.name, backgroundColors)}"
-                    >{{initial(item.name)}}</div>
-                    <div class="medallion__tooltip">
-                        {{item.name}}
-                        <div class="tooltip-diamond"></div>
-                    </div>
-                </template>
-                <template v-else>
-                    <div class="medallion medallion__no-name"
-                         :class="{'medallion--transition':transition}"
-                         :style = "{'background-color': randomBackgroundColor(item.email, backgroundColors)}"
-                    >@</div>
-                    <div class="medallion__tooltip">
-                        {{item.email}}
-                        <div class="tooltip-diamond"></div>
-                    </div>
-                </template>
-            </a>
-            <div class="medallion__box">
-                <div class="medallion medallion--last"
-                   :class="[medallionClass, {'medallion--transition':transition}]"
-                   v-if = "volunteers.length > thisCount"
-                >+{{volunteers.length-thisCount}}</div>
-                <div class="medallion__tooltip medallion-tooltip">
-                    <a class="medallion-tooltip__item"
-                       v-for  = "(item, index) in volunteers"
-                       v-if   = "index >= thisCount"
-                       :key   = "item.id"
-                       :href  = "item.url"
-                    >
-                        {{item.name}}
-                    </a>
+    <div class="user-ava-medallions">
+        <a
+                class="medallion__box"
+                :class="{'medallion__box--transition':transition}"
+                v-for="(item, index) in volunteers"
+                v-if="index < thisCount"
+                :key="item.id"
+                :href="item.name ? item.url : 'javascript:void(0)'"
+        >
+            <template v-if="item.name ">
+                <div class="medallion"
+                     v-if="item.profile_photo"
+                     :class="{'medallion--transition':transition}"
+                     :style="{'background-image': `url(${item.profile_photo})`}"
+                ></div>
+                <div v-else
+                     class="medallion medallion__no-profile-photo"
+                     :style="{'background-color': randomBackgroundColor(item.name, backgroundColors)}"
+                >{{initial(item.name)}}
+                </div>
+                <div class="medallion__tooltip">
+                    {{item.name}}
                     <div class="tooltip-diamond"></div>
                 </div>
+            </template>
+            <template v-else>
+                <div class="medallion medallion__no-name"
+                     :class="{'medallion--transition':transition}"
+                     :style="{'background-color': randomBackgroundColor(item.name, backgroundColors)}"
+                >@</div>
+                <div class="medallion__tooltip">
+                    {{cropEmail(item.email)}}
+                    <div class="tooltip-diamond"></div>
+                </div>
+            </template>
+        </a>
+        <div class="medallion__box">
+            <div class="medallion medallion--last"
+                 :class="[medallionClass, {'medallion--transition':transition}]"
+                 v-if="volunteers.length > thisCount"
+            >+{{volunteers.length - thisCount}}
             </div>
-      </div>
+            <div class="medallion__tooltip medallion-tooltip">
+                <a class="medallion-tooltip__item"
+                   v-for="(item, index) in volunteers"
+                   v-if="index >= thisCount"
+                   :key="item.id"
+                   :href="item.url ? item.url : 'javascript:void(0)'"
+                >
+                    {{item.name ? item.name : cropEmail(item.email)}}
+                </a>
+                <div class="tooltip-diamond"></div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-
     const UserAvaMedals = {
         props: {
             volunteers: {
@@ -67,7 +68,7 @@
                             'name'         : 'Sylvester Roch',
                             'profile_photo': 'https://robohash.org/ullamutquam.png?size=50x50&set=set1',
                             'email'        : 'sroch0@bbc.co.uk',
-                            'url'          : 'https://bravesites.com'}]
+                            'url'          : 'https://bravesites.com'},];
                     };
                 },
             },
@@ -116,12 +117,14 @@
             };
         },
         computed: {
-            // background() {
-            //    return this.backgroundColor ||
-            //       this.randomBackgroundColor(this.username.length, this.backgroundColors);
-            // },
         },
         methods: {
+            cropEmail(email) {
+                const foundPos = email.indexOf('@');
+                console.log('foundPos ', foundPos);
+                if (foundPos === -1) return email;
+                return email.substr(0, foundPos);
+            },
             randomBackgroundColor(seed, colors) {
                 return colors[seed % (colors.length)];
             },
@@ -162,7 +165,6 @@
       border: 2px solid $background-light;
       border-radius: 100%;
       height: 28px;
-      // margin-left: -10px;
       transition: all .3s;
       width: 28px;
       &__box {
@@ -184,7 +186,6 @@
           background-color: $info;
           display: flex;
           justify-content: center;
-          margin-left: -10px;
           transition: all .4s ease;
           z-index: 10;
       }
@@ -223,14 +224,19 @@
           justify-content: center;
       }
       &__no-name {
-          @include fnt($text-invert, $size-7, $weight-bold, center);
+          @include fnt($text-invert, 12px, $weight-bold, center);
           align-items: center;
+          cursor: auto;
           display: flex;
           justify-content: center;
+          line-height: 1.25;
       }
   }
+  a:hover{
+      text-decoration: none;
+      color: $grey-light;
+  }
   .medallion-tooltip {
-      //display: flex;
       flex-direction: column;
       align-items: flex-start;
       padding: 14px 8px;
@@ -238,6 +244,7 @@
       &__item {
           @include fnt($text-invert, 9px, $weight-light, left);
           cursor: pointer;
+          transition: all .3s ease;
       }
   }
 
