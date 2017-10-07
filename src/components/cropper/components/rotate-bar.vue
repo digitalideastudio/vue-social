@@ -18,26 +18,8 @@
     </div>
 </template>
 
-<style>
-    .g-rotate-bar {
-        position: absolute;
-        bottom: 30px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        z-index: 99999;
-    }
-
-    .g-rotate-bar .svg-icon {
-        display: inline-block;
-        width: 1.2em;
-        height: 1.2em;
-        margin: 0 2em;
-    }
-</style>
-
 <script>
-    module.exports = {
+    export default {
         data() {
             return {
                 rotateDegree: 0,
@@ -57,3 +39,21 @@
         },
     };
 </script>
+
+<style scoped>
+    .g-rotate-bar {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 99999;
+    }
+
+    .g-rotate-bar .svg-icon {
+        display: inline-block;
+        width: 1.2em;
+        height: 1.2em;
+        margin: 0 2em;
+    }
+</style>

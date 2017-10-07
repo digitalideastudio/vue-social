@@ -46,9 +46,9 @@
     import xhr from 'core-image-xhr';
     import GIF_LOADING_SRC from './lib/loading-gif';
     import canvasHelper from './lib/canvas-helper';
-    import props from './props';
-    import Crop from './crop.vue';
-    import ResizeBar from './resize-bar.vue';
+    import props from './lib/props';
+    import Crop from './components/crop.vue';
+    import ResizeBar from './components/resize-bar.vue';
 
     let overflowVal = '';
     export default {

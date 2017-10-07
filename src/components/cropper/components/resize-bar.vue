@@ -11,8 +11,8 @@
 </template>
 
 <script>
-    import { isMobile } from './lib/helper';
-    import drag from './lib/drag';
+    import { isMobile } from '../lib/helper';
+    import drag from '../lib/drag';
 
     const ResizeBar = {
         props: {

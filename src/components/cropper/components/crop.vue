@@ -29,13 +29,13 @@
 </template>
 
 <script>
-    import drag from './lib/drag';
-    import resize from './lib/resize';
-    import GIF_LOADING_SRC from './lib/loading-gif';
-    import { setCssText, isMobile } from './lib/helper';
-    import canvasHelper from './lib/canvas-helper';
-    import ResizeBar from './resize-bar.vue';
-    import RotateBar from './rotate-bar.vue';
+    import drag from '../lib/drag';
+    import resize from '../lib/resize';
+    import GIF_LOADING_SRC from '../lib/loading-gif';
+    import { setCssText, isMobile } from '../lib/helper';
+    import canvasHelper from '../lib/canvas-helper';
+    import ResizeBar from './resize-bar';
+    import RotateBar from './rotate-bar';
 
     const CROPBOX_PERCENT = 75;
     const areaWidth = window.innerWidth - 60;
