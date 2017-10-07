@@ -1,6 +1,7 @@
 const props = {
     url: {
-        type: String,
+        type    : String,
+        required: true,
     },
     text: {
         type   : String,

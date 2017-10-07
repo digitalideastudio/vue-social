@@ -1,22 +1,25 @@
 <template>
-    <div class="g-core-image-upload-btn">
+    <div class="vsc-cropper">
         <slot>{{ text }}</slot>
-        <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data"
-              style="display: block; cursor: pointer; position: absolute; left: 0px; top: 0px; width: 1242px; height: 61px; opacity: 0; margin: 0px; padding: 0px; overflow: hidden;">
-            <input v-bind:disabled="uploading" v-bind:id="'g-core-upload-input-' + formID" v-bind:name="name"
-                   v-bind:multiple="multiple" type="file" v-bind:accept="inputAccept" v-on:change="change"
+        <form class="vsc-cropper-form"
+              v-show="!hasImage"
+              method="post"
+              enctype="multipart/form-data"
+        >
+            <input :disabled="uploading" :id="'g-core-upload-input-' + formID" :name="name"
+                   :multiple="multiple" type="file" :accept="inputAccept" @change="change"
                    style="width: 100%; height: 100%;">
         </form>
-        <div class="g-core-image-corp-container" v-bind:id="'vciu-modal-' + formID" v-show="hasImage">
+        <div class="g-core-image-corp-container" :id="'vciu-modal-' + formID" v-show="hasImage">
             <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
             <div class="info-aside">
                 <p class="btn-groups" v-if="crop">
-                    <button type="button" v-on:click="doCrop" class="btn btn-upload">{{ cropBtn.ok }}</button>
-                    <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ cropBtn.cancel }}</button>
+                    <button type="button" @click="doCrop" class="btn btn-upload">{{ cropBtn.ok }}</button>
+                    <button type="button" @click="cancel" class="btn btn-cancel">{{ cropBtn.cancel }}</button>
                 </p>
                 <p class="btn-groups" v-if="resize && !crop">
-                    <button type="button" v-on:click="doResize" class="btn btn-upload">{{ ResizeBtn.ok }}</button>
-                    <button type="button" v-on:click="cancel" class="btn btn-cancel">{{ ResizeBtn.cancel }}</button>
+                    <button type="button" @click="doResize" class="btn btn-upload">{{ ResizeBtn.ok }}</button>
+                    <button type="button" @click="cancel" class="btn btn-cancel">{{ ResizeBtn.cancel }}</button>
                 </p>
             </div>
         </div>
@@ -279,7 +282,7 @@
                         data.append(this.name, this.files[i]);
                     }
                     if (typeof this.data === 'object') {
-                        this.data.forEach((k) => {
+                        Object.keys(this.data).forEach((k) => {
                             if (this.data[k] !== undefined) {
                                 data.append(k, this.data[k]);
                             }
@@ -293,4 +296,25 @@
     };
 </script>
 
-<style src="./style/style.css"></style>
+<style scoped>
+    .vsc-cropper {
+        overflow : hidden;
+        position : relative;
+    }
+
+    .vsc-cropper-form {
+        bottom   : 0;
+        cursor   : pointer;
+        display  : block;
+        height   : 61px;
+        left     : 0;
+        margin   : 0;
+        opacity  : 0;
+        overflow : hidden;
+        padding  : 0;
+        position : absolute;
+        right    : 0;
+        top      : 0;
+        width    : 1242px;
+    }
+</style>
