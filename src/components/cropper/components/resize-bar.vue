@@ -1,11 +1,11 @@
 <template>
-    <div class="g-resize-bar">
-        <div class="g-resize-highlight" :style="{ width: left + '%' }"></div>
-        <button type="button"
-                class="circle-btn"
-                @touchstart.self="drag"
+    <div class="vsc-resize-bar">
+        <div :style="{ width: left + '%' }" class="vsc-resize-highlight"></div>
+        <button :style="{ left: left + '%' }"
                 @mousedown.self="drag"
-                :style="{ left: left + '%' }"
+                @touchstart.self="drag"
+                class="circle-btn"
+                type="button"
         ></button>
     </div>
 </template>
@@ -91,7 +91,7 @@
 </script>
 
 <style scoped>
-    .g-resize-bar {
+    .vsc-resize-bar {
         position: absolute;
         bottom: 0px;
         height: 6px;
@@ -103,7 +103,7 @@
         box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .3);
     }
 
-    .g-resize-highlight {
+    .vsc-resize-highlight {
         position: absolute;
         left: 0;
         top: 0;
