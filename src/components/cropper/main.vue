@@ -2,22 +2,38 @@
     <div class="vsc-cropper">
         <slot>{{ text }}</slot>
         <form class="vsc-cropper-form"
-              v-show="!hasImage"
-              method="post"
               enctype="multipart/form-data"
+              method="post"
+              v-show="!hasImage"
         >
-            <input :disabled="uploading" :id="'g-core-upload-input-' + formID" :name="name"
-                   :multiple="multiple" type="file" :accept="inputAccept" @change="change"
-                   style="width: 100%; height: 100%;">
+            <input :disabled="uploading"
+                   :accept="inputAccept"
+                   :multiple="multiple"
+                   :name="name"
+                   @change="change"
+                   class="vsc-cropper-input"
+                   ref="input"
+                   type="file"
+            >
         </form>
-        <div class="g-core-image-corp-container" :id="'vciu-modal-' + formID" v-show="hasImage">
-            <crop ref="cropBox" :is-resize="resize && !crop" :ratio="cropRatio" :is-rotate="rotate"></crop>
-            <div class="info-aside">
-                <p class="btn-groups" v-if="crop">
-                    <button type="button" @click="doCrop" class="btn btn-upload">{{ cropBtn.ok }}</button>
+        <div class="vsc-cropper-container"
+             ref="container"
+             v-show="hasImage"
+        >
+            <crop :is-resize="resize && !crop"
+                  :is-rotate="rotate"
+                  :ratio="cropRatio"
+                  ref="crop"
+            ></crop>
+            <div class="btn-wrapper">
+                <p class="btn-group"
+                   v-if="crop">
+                    <button @click="doCrop"
+                            class="btn btn-upload"
+                            type="button">{{ cropBtn.ok }}</button>
                     <button type="button" @click="cancel" class="btn btn-cancel">{{ cropBtn.cancel }}</button>
                 </p>
-                <p class="btn-groups" v-if="resize && !crop">
+                <p class="btn-group" v-if="resize && !crop">
                     <button type="button" @click="doResize" class="btn btn-upload">{{ ResizeBtn.ok }}</button>
                     <button type="button" @click="cancel" class="btn btn-cancel">{{ ResizeBtn.cancel }}</button>
                 </p>
@@ -48,7 +64,6 @@
                 hasImage : false,
                 options  : this.props,
                 uploading: false,
-                formID   : (`${(Math.random() * 10000)}`).split('.')[0],
                 image    : {
                     src        : GIF_LOADING_SRC,
                     width      : 24,
@@ -74,12 +89,11 @@
                 }
             },
             find(str) {
-                const dq = document.querySelector(`#vciu-modal-${this.formID}`);
-                return dq.querySelector(str);
+                return this.$refs.container.querySelector(str);
             },
             change(e) {
                 this.dispatch('changing', e);
-                const fileVal = document.querySelector(`#g-core-upload-input-${this.formID}`).value.replace(/C:\\fakepath\\/i, '');
+                const fileVal = this.$refs.input.value.replace(/C:\\fakepath\\/i, '');
                 const fileExt = fileVal.substring(fileVal.lastIndexOf('.') + 1);
                 const extensionsArr = this.extensions.split(',');
                 if (extensionsArr.length > 1) {
@@ -151,26 +165,26 @@
                 const self = this;
                 this.dispatch('imageloading', { pic, self });
                 pic.src = src;
-                const cropBox = this.$refs.cropBox;
+                const crop = this.$refs.crop;
                 pic.onload = function picOnload() {
                     self.image.minProgress = self.minWidth / pic.naturalWidth;
-                    self.imgChangeRatio = cropBox.setImage(src, pic.naturalWidth, pic.naturalHeight);
+                    self.imgChangeRatio = crop.setImage(src, pic.naturalWidth, pic.naturalHeight);
                     this.dispatch('imageloaded', { pic, self });
                 }.bind(this);
             },
 
             resizeImage(progress) {
-                const cropBox = this.$refs.cropBox;
-                cropBox.resizeImage(progress);
+                const crop = this.$refs.crop;
+                crop.resizeImage(progress);
             },
 
             doCrop(e) {
                 this.setData('crop');
-                const cropBox = this.$refs.cropBox;
+                const crop = this.$refs.crop;
                 const upload = this.setUpload(e.target);
 
                 if (this.crop === 'local') {
-                    const targetImage = cropBox.getCropImage();
+                    const targetImage = crop.getCropImage();
                     this.data.comprose = 100 - this.compress;
                     return canvasHelper.crop(targetImage, this.data, (code) => {
                         upload(code);
@@ -182,10 +196,10 @@
 
             doResize(e) {
                 this.setData('resize');
-                const cropBox = this.$refs.cropBox;
+                const crop = this.$refs.crop;
                 const upload = this.setUpload(e.target);
                 if (this.resize === 'local') {
-                    const targetImage = cropBox.getCropImage();
+                    const targetImage = crop.getCropImage();
                     this.data.comprose = 100 - this.compress;
                     return canvasHelper.resize(targetImage, this.data, (code) => {
                         upload(code);
@@ -200,8 +214,8 @@
                     this.data = {};
                 }
                 this.data.request = type;
-                const cropBox = this.$refs.cropBox;
-                const newCSSObj = cropBox.getCropData();
+                const crop = this.$refs.crop;
+                const newCSSObj = crop.getCropData();
 
                 Object.keys(newCSSObj).forEach((k) => {
                     this.data[k] = newCSSObj[k];
@@ -238,7 +252,7 @@
                 this.hasImage = false;
                 document.body.style.overflow = overflowVal;
                 this.files = '';
-                document.querySelector(`#g-core-upload-input-${this.formID}`).value = '';
+                this.$refs.input.value = '';
             },
 
             // use ajax upload  IE10+
@@ -316,5 +330,79 @@
         right    : 0;
         top      : 0;
         width    : 1242px;
+    }
+
+    .vsc-cropper-input {
+        height : 100%;
+        width  : 100%;
+    }
+
+    .vsc-cropper-container {
+        background : rgba(0, 0, 0, .9);
+        bottom     : 0;
+        color      : #f1f1f1;
+        left       : 0;
+        position   : fixed;
+        right      : 0;
+        top        : 0;
+        z-index    : 1900;
+    }
+
+    .btn-wrapper {
+        background    : #fefefe;
+        color         : #777;
+        height        : 40px;
+        left          : 0;
+        padding-left  : 10px;
+        padding-right : 10px;
+        position      : absolute;
+        right         : 0;
+        top           : 0;
+    }
+
+    .btn-group {
+        text-align : right;
+        margin     : 5px 0 0;
+    }
+
+    .btn {
+        background    : #fff;
+        border        : 1px solid #ccc;
+        border-radius : 2px;
+        color         : #222;
+        display       : inline-block;
+        font-size     : 13px;
+        height        : 32px;
+        line-height   : 32px;
+        margin-left   : 15px;
+        padding       : 0 15px;
+        transition    : all .1s ease-in;
+    }
+
+    .btn:active {
+        background : #ddd;
+    }
+
+    .btn:hover {
+        border     : 1px solid #777;
+        box-shadow : 0 1px 3px rgba(0, 0, 0, .05);
+    }
+
+    .btn:disabled {
+        background   : #eee !important;
+        border-color : #ccc;
+        cursor       : not-allowed;
+    }
+
+    .btn-upload {
+        background   : #27ae60;
+        border-color : #27ae60;
+        color        : #fff;
+    }
+
+    .btn-upload:hover {
+        background   : #2dc26c;
+        border-color : #27ae60;
+        box-shadow   : 0 1px 3px rgba(0, 0, 0, .05);
     }
 </style>

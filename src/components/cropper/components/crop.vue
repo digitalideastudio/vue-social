@@ -36,10 +36,11 @@
     import canvasHelper from './lib/canvas-helper';
     import ResizeBar from './resize-bar.vue';
     import RotateBar from './rotate-bar.vue';
-    // set cropbox size in image
+
     const CROPBOX_PERCENT = 75;
     const areaWidth = window.innerWidth - 60;
     const areaHeight = window.innerHeight - 110;
+
     const Crop = {
         components: {
             ResizeBar,
@@ -338,113 +339,123 @@
 
 <style scoped>
     .g-crop-image-principal {
-        overflow: hidden;
-        position: relative;
-        background-color: #fff;
-        background-image: -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-        background-image: -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-        background-image: -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-        background-image: linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
-        background-position: 0 0, 10px 10px;
-        -webkit-background-size: 21px 21px;
-        background-size: 21px 21px;
+        overflow                : hidden;
+        position                : relative;
+        background-color        : #fff;
+        background-image        : -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), -webkit-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
+        background-image        : -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), -moz-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
+        background-image        : -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), -o-linear-gradient(bottom left, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
+        background-image        : linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef), linear-gradient(to top right, #efefef 25%, transparent 25%, transparent 75%, #efefef 75%, #efefef);
+        background-position     : 0 0, 10px 10px;
+        -webkit-background-size : 21px 21px;
+        background-size         : 21px 21px;
     }
 
     .image-aside {
-        overflow: hidden;
-        position: absolute;
-        right: 30px;
-        left: 30px;
-        top: 70px;
-        bottom: 40px;
-        text-align: center;
+        overflow   : hidden;
+        position   : absolute;
+        right      : 30px;
+        left       : 30px;
+        top        : 70px;
+        bottom     : 40px;
+        text-align : center;
+    }
+
+    .image-aside img {
+        -khtml-user-select    : none;
+        -moz-user-select      : none;
+        -ms-user-select       : none;
+        -webkit-touch-callout : none;
+        -webkit-user-select   : none;
+        max-width             : 100%;
+        user-select           : none;
     }
 
     .image-aside .image-wrap {
-        position: absolute;
-        left: 0;
-        top: 0;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        box-shadow: 0 3px 5px -2px rgba(0, 0, 0, .25);
-        background-size: cover;
+        position              : absolute;
+        left                  : 0;
+        top                   : 0;
+        -webkit-touch-callout : none;
+        -webkit-user-select   : none;
+        -khtml-user-select    : none;
+        -moz-user-select      : none;
+        -ms-user-select       : none;
+        user-select           : none;
+        box-shadow            : 0 3px 5px -2px rgba(0, 0, 0, .25);
+        background-size       : cover;
     }
 
     .image-mask {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        position : absolute;
+        left     : 0;
+        top      : 0;
+        width    : 100%;
+        height   : 100%;
     }
 
     .image-mask .mask {
-        position: absolute;
-        background-color: rgba(255, 255, 255, .6);
+        position         : absolute;
+        background-color : rgba(255, 255, 255, .6);
     }
 
     .crop-box {
-        z-index: 2000;
-        box-sizing: border-box;
-        position: absolute;
-        background: none;
-        cursor: move;
-        width: 100px;
-        height: 100px;
-        border: 1px solid rgba(255, 255, 255, .95);
+        z-index    : 2000;
+        box-sizing : border-box;
+        position   : absolute;
+        background : none;
+        cursor     : move;
+        width      : 100px;
+        height     : 100px;
+        border     : 1px solid rgba(255, 255, 255, .95);
     }
 
     .crop-box:after,
     .crop-box:before {
-        content: '';
-        display: block;
-        opacity: 0;
-        position: absolute;
-        left: 33.3333%;
-        top: 0;
-        width: 33.334%;
-        height: 100%;
-        background-color: transparent;
-        border-color: rgba(255, 255, 255, .7);
-        border-style: solid;
-        border-width: 0;
+        content          : '';
+        display          : block;
+        opacity          : 0;
+        position         : absolute;
+        left             : 33.3333%;
+        top              : 0;
+        width            : 33.334%;
+        height           : 100%;
+        background-color : transparent;
+        border-color     : rgba(255, 255, 255, .7);
+        border-style     : solid;
+        border-width     : 0;
     }
 
     .crop-box:active::before,
     .crop-box:active::after {
-        opacity: 1;
+        opacity : 1;
     }
 
     .crop-box:before {
-        border-left-width: 1px;
-        border-right-width: 1px;
+        border-left-width  : 1px;
+        border-right-width : 1px;
     }
 
     .crop-box:after {
-        top: 33.3333%;
-        left: 0;
-        height: 33.3334%;
-        width: 100%;
-        border-top-width: 1px;
-        border-bottom-width: 1px;
+        top                 : 33.3333%;
+        left                : 0;
+        height              : 33.3334%;
+        width               : 100%;
+        border-top-width    : 1px;
+        border-bottom-width : 1px;
 
     }
 
     .crop-box .g-resize {
-        display: inline-block;
-        z-index: 1910;
-        position: absolute;
-        bottom: -8px;
-        right: -8px;
-        width: 16px;
-        height: 16px;
-        cursor: se-resize;
-        border-radius: 10px;
-        background-color: #fff;
-        box-shadow: 0 2px 4px -2px rgba(0, 0, 0, .25);
+        display          : inline-block;
+        z-index          : 1910;
+        position         : absolute;
+        bottom           : -8px;
+        right            : -8px;
+        width            : 16px;
+        height           : 16px;
+        cursor           : se-resize;
+        border-radius    : 10px;
+        background-color : #fff;
+        box-shadow       : 0 2px 4px -2px rgba(0, 0, 0, .25);
     }
 </style>
