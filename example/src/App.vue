@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <cropper url="https://jsonplaceholder.typicode.com/photos">
+        <cropper url="http://127.0.0.1:8082" crop="local">
             <i class="fa fa-camera-retro fa-fw" aria-hidden="true"></i>
         </cropper>
     </div>

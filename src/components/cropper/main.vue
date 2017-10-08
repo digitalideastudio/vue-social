@@ -14,6 +14,7 @@
                    :name="name"
                    @change="change"
                    class="vsc-cropper-input"
+                   :style="{ width: `${100 + inputWidth}px` }"
                    ref="input"
                    type="file"
             >
@@ -51,23 +52,22 @@
     import canvasHelper from './lib/canvas-helper';
     import props from './lib/props';
     import Crop from './components/crop.vue';
-    import ResizeBar from './components/resize-bar.vue';
 
     let overflowVal = '';
     export default {
         name      : 'cropper',
         components: {
             Crop,
-            ResizeBar,
         },
         props,
         data() {
             return {
-                files    : [],
-                hasImage : false,
-                options  : this.props,
-                uploading: false,
-                image    : {
+                inputWidth: 0,
+                files     : [],
+                hasImage  : false,
+                options   : this.props,
+                uploading : false,
+                image     : {
                     src        : config.loadingGif,
                     width      : 24,
                     height     : 24,
@@ -310,6 +310,9 @@
                 return xhr('POST', this.url, this.headers, data, done, errorUpload, isBinary, this.credentials);
             },
         },
+        mounted() {
+            this.inputWidth = this.$el.clientWidth;
+        },
     };
 </script>
 
@@ -324,7 +327,6 @@
         bottom   : 0;
         cursor   : pointer;
         display  : block;
-        height   : 61px;
         left     : 0;
         margin   : 0;
         opacity  : 0;
@@ -336,8 +338,12 @@
     }
 
     .vsc-cropper-input {
-        height : 100%;
-        width  : 100%;
+        bottom   : 0;
+        cursor   : pointer;
+        left     : -100px;
+        position : absolute;
+        right    : 0;
+        top      : 0;
     }
 
     .vsc-cropper-container {
