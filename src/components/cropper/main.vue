@@ -1,6 +1,8 @@
 <template>
-    <div class="vsc-cropper">
-        <slot>{{ text }}</slot>
+    <div :class="classes">
+        <span class="vsc-cropper-label">
+            <slot>{{ text }}</slot>
+        </span>
         <form class="vsc-cropper-form"
               enctype="multipart/form-data"
               method="post"
@@ -30,7 +32,8 @@
                    v-if="crop">
                     <button @click="doCrop"
                             class="btn btn-upload"
-                            type="button">{{ cropBtn.ok }}</button>
+                            type="button">{{ cropBtn.ok }}
+                    </button>
                     <button type="button" @click="cancel" class="btn btn-cancel">{{ cropBtn.cancel }}</button>
                 </p>
                 <p class="btn-group" v-if="resize && !crop">
@@ -314,6 +317,7 @@
     .vsc-cropper {
         overflow : hidden;
         position : relative;
+        display  : inline-block;
     }
 
     .vsc-cropper-form {
@@ -329,7 +333,6 @@
         position : absolute;
         right    : 0;
         top      : 0;
-        width    : 1242px;
     }
 
     .vsc-cropper-input {

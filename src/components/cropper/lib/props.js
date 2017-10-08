@@ -1,4 +1,9 @@
 const props = {
+    classes: {
+        type    : Array,
+        required: false,
+        default : 'vsc-cropper',
+    },
     url: {
         type    : String,
         required: true,
