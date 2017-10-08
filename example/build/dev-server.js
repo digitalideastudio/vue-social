@@ -1,5 +1,6 @@
-require('./check-versions')();
+const childProcess = require('child_process');
 
+require('./check-versions')();
 const config = require('../config');
 
 if (!process.env.NODE_ENV) {
@@ -89,3 +90,13 @@ module.exports = {
         server.close();
     },
 };
+
+const backendPort = process.env.BACKEND_PORT || config.dev.backendPort;
+
+childProcess.exec(`php -S localhost:${backendPort} -t build/backend`, (error, stdout, stderr) => {
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    if (error !== null) {
+        console.log(`exec error: ${error}`);
+    }
+});
