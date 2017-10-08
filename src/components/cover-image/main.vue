@@ -114,4 +114,8 @@
         cursor           : pointer;
         margin-right     : 10px;
     }
+
+    .actions button:last-child {
+        margin-right: 0;
+    }
 </style>
