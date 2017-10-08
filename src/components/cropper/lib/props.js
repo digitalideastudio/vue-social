@@ -14,7 +14,7 @@ const props = {
     },
     extensions: {
         type   : String,
-        default: 'png.jpg,jpeg,gif,svg,webp',
+        default: 'png,jpg,jpeg,gif,svg,webp',
     },
     inputOfFile: {
         type   : String,

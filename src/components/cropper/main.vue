@@ -103,7 +103,7 @@
                     const reg = new RegExp(`^[${extensionsArr.join('|')}]+$`, 'i');
 
                     if (!reg.test(fileExt)) {
-                        return this.dispatch('errorhandle', {
+                        return this.dispatch('error', {
                             code       : 'INVALID_TYPE',
                             description: 'Invalid file type',
                         });
@@ -119,7 +119,7 @@
                     } else {
                         formatSize = `${this.options.maxFileSize.toFixed(2)}Byte`;
                     }
-                    return this.dispatch('errorhandle', {
+                    return this.dispatch('error', {
                         code       : 'INVALID_SIZE',
                         description: `File is too large. Max file size is ${formatSize}`,
                     });
@@ -131,7 +131,7 @@
                     return true;
                 }
 
-                this.dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
+                this.dispatch('changed', this.files.length > 1 ? this.files : this.files[0]);
 
                 if (this.compress && this.files[0].type !== 'image/png' && this.files[0].type !== 'image/gif') {
                     canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
@@ -151,10 +151,10 @@
             readFiles() {
                 const reader = new FileReader();
                 const self = this;
-                this.dispatch('filereading', { self });
+                this.dispatch('file_reading', { self });
                 reader.onload = function readerOnload(e) {
                     const src = e.target.result;
-                    this.dispatch('fileread', { src, self });
+                    this.dispatch('file_read', { src, self });
                     overflowVal = document.body.style.overflow;
                     document.body.style.overflow = 'hidden';
                     self.initImage(src);
@@ -166,13 +166,13 @@
             initImage(src) {
                 const pic = new Image();
                 const self = this;
-                this.dispatch('imageloading', { pic, self });
+                this.dispatch('image_loading', { pic, self });
                 pic.src = src;
                 const crop = this.$refs.crop;
                 pic.onload = function picOnload() {
                     self.image.minProgress = self.minWidth / pic.naturalWidth;
                     self.imgChangeRatio = crop.setImage(src, pic.naturalWidth, pic.naturalHeight);
-                    this.dispatch('imageloaded', { pic, self });
+                    this.dispatch('image_loaded', { pic, self });
                 }.bind(this);
             },
 
@@ -233,6 +233,9 @@
                 if (this.minWidth) {
                     this.data.minWidth = this.minWidth;
                 }
+
+                console.log(this.data);
+                console.log(newCSSObj);
             },
 
             setUpload(btn) {
