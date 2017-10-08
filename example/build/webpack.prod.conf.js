@@ -11,7 +11,6 @@ const utils = require('./utils');
 const config = require('../config');
 const baseWebpackConfig = require('./webpack.base.conf');
 
-
 const env = config.build.env;
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -28,7 +27,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
     },
     plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
+        // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
             'process.env': env,
         }),
@@ -38,20 +37,20 @@ const webpackConfig = merge(baseWebpackConfig, {
             },
             sourceMap: true,
         }),
-    // extract css into its own file
+        // extract css into its own file
         new ExtractTextPlugin({
             filename: utils.assetsPath('css/[name].[contenthash].css'),
         }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
+        // Compress extracted CSS. We are using this plugin so that possible
+        // duplicated CSS from different components can be deduped.
         new OptimizeCSSPlugin({
             cssProcessorOptions: {
                 safe: true,
             },
         }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
+        // generate dist index.html with correct asset hash for caching.
+        // you can customize output by editing /index.html
+        // see https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
             filename: config.build.index,
             template: 'index.html',
@@ -60,15 +59,15 @@ const webpackConfig = merge(baseWebpackConfig, {
                 removeComments       : true,
                 collapseWhitespace   : true,
                 removeAttributeQuotes: true,
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
+                // more options:
+                // https://github.com/kangax/html-minifier#options-quick-reference
             },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency',
         }),
-    // keep module.id stable when vender modules does not change
+        // keep module.id stable when vender modules does not change
         new webpack.HashedModuleIdsPlugin(),
-    // split vendor js into its own file
+        // split vendor js into its own file
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks(module) {
@@ -88,7 +87,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             name  : 'manifest',
             chunks: ['vendor'],
         }),
-    // copy custom static assets
+        // copy custom static assets
         new CopyWebpackPlugin([
             {
                 from  : path.resolve(__dirname, '../static'),

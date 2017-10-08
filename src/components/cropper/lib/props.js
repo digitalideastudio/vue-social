@@ -1,6 +1,6 @@
 const props = {
     classes: {
-        type    : Array,
+        type    : String,
         required: false,
         default : 'vsc-cropper',
     },

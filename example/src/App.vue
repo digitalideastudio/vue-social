@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <cropper>
-            <i class="fa fa-camera-retro" aria-hidden="true"></i>
+        <cropper url="https://jsonplaceholder.typicode.com/photos">
+            <i class="fa fa-camera-retro fa-fw" aria-hidden="true"></i>
         </cropper>
     </div>
 </template>
