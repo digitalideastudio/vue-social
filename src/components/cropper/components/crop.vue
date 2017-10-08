@@ -31,7 +31,7 @@
 <script>
     import drag from '../lib/drag';
     import resize from '../lib/resize';
-    import GIF_LOADING_SRC from '../lib/loading-gif';
+    import config from '../lib/config';
     import { setCssText, isMobile } from '../lib/helper';
     import canvasHelper from '../lib/canvas-helper';
     import ResizeBar from './resize-bar';
@@ -70,7 +70,7 @@
         },
         data() {
             return {
-                src       : GIF_LOADING_SRC,
+                src       : config.loadingGif,
                 width     : 24,
                 height    : 24,
                 initWidth : 24,

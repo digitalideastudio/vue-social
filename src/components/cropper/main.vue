@@ -44,7 +44,7 @@
 
 <script>
     import xhr from 'core-image-xhr';
-    import GIF_LOADING_SRC from './lib/loading-gif';
+    import config from './lib/config';
     import canvasHelper from './lib/canvas-helper';
     import props from './lib/props';
     import Crop from './components/crop.vue';
@@ -65,7 +65,7 @@
                 options  : this.props,
                 uploading: false,
                 image    : {
-                    src        : GIF_LOADING_SRC,
+                    src        : config.loadingGif,
                     width      : 24,
                     height     : 24,
                     minProgress: 0.05,
