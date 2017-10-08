@@ -111,5 +111,7 @@
         border-color     : #ff9800;
         border-radius    : 2px;
         color            : #fff;
+        cursor           : pointer;
+        margin-right     : 10px;
     }
 </style>
