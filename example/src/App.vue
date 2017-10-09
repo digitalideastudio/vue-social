@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import Cropper from '../../src/components/cropper';
+    import Cropper from '../../src/components/image-cropper';
 
     export default {
         name      : 'app',

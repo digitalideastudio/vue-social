@@ -2,7 +2,7 @@ const props = {
     classes: {
         type    : String,
         required: false,
-        default : 'vsc-cropper',
+        default : 'vsc-image-cropper',
     },
     url: {
         type    : String,

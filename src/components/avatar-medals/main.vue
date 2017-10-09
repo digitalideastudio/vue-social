@@ -57,7 +57,7 @@
 </template>
 
 <script>
-    const UserAvaMedals = {
+    const AvatarMedals = {
         props: {
             volunteers: {
                 type    : [],
@@ -146,7 +146,7 @@
             },
         },
     };
-    export default UserAvaMedals;
+    export default AvatarMedals;
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>

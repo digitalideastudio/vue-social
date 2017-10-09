@@ -1,8 +1,14 @@
-import Cropper from './components/cropper/index';
+import ImageCropper from './components/image-cropper/index';
+import AvatarMedals from './components/avatar-medals/index';
+import CoverImage from './components/cover-image/index';
+import SchedulePicker from './components/schedule-picker/index';
 import * as locale from './locale';
 
 const components = [
-    Cropper,
+    ImageCropper,
+    AvatarMedals,
+    CoverImage,
+    SchedulePicker,
 ];
 
 const install = function install(Vue, opts = {}) {
@@ -20,7 +26,10 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 module.exports = {
-    version: '0.1.0',
-    Cropper,
+    version: '0.1.1',
+    ImageCropper,
+    AvatarMedals,
+    CoverImage,
+    SchedulePicker,
     install,
 };

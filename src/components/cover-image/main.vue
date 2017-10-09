@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    export default {
+    const CoverImage = {
         name : 'cover-image',
         props: {
             classes: {
@@ -64,6 +64,7 @@
             return {};
         },
     };
+    export default CoverImage;
 </script>
 
 <style scoped>

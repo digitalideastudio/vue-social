@@ -1,9 +1,9 @@
 <template>
     <div :class="classes">
-        <span class="vsc-cropper-label">
+        <span class="vsc-image-cropper-label">
             <slot>{{ text }}</slot>
         </span>
-        <form class="vsc-cropper-form"
+        <form class="vsc-image-cropper-form"
               enctype="multipart/form-data"
               method="post"
               v-show="!hasImage"
@@ -13,13 +13,13 @@
                    :multiple="multiple"
                    :name="name"
                    @change="change"
-                   class="vsc-cropper-input"
+                   class="vsc-image-cropper-input"
                    :style="{ width: `${100 + inputWidth}px` }"
                    ref="input"
                    type="file"
             >
         </form>
-        <div class="vsc-cropper-container"
+        <div class="vsc-image-cropper-container"
              ref="container"
              v-show="hasImage"
         >
@@ -54,8 +54,8 @@
     import Crop from './components/crop.vue';
 
     let overflowVal = '';
-    export default {
-        name      : 'cropper',
+    const ImageCropper = {
+        name      : 'image-cropper',
         components: {
             Crop,
         },
@@ -317,16 +317,17 @@
             this.inputWidth = this.$el.clientWidth;
         },
     };
+    export default ImageCropper;
 </script>
 
 <style scoped>
-    .vsc-cropper {
+    .vsc-image-cropper {
         overflow : hidden;
         position : relative;
         display  : inline-block;
     }
 
-    .vsc-cropper-form {
+    .vsc-image-cropper-form {
         bottom   : 0;
         cursor   : pointer;
         display  : block;
@@ -340,7 +341,7 @@
         top      : 0;
     }
 
-    .vsc-cropper-input {
+    .vsc-image-cropper-input {
         bottom   : 0;
         cursor   : pointer;
         left     : -100px;
@@ -349,7 +350,7 @@
         top      : 0;
     }
 
-    .vsc-cropper-container {
+    .vsc-image-cropper-container {
         background : rgba(0, 0, 0, .9);
         bottom     : 0;
         color      : #f1f1f1;
