@@ -2,58 +2,14 @@
     <div :class="classes">
         <div :key="shift.id"
              class="vsc-sp-shift-wrapper"
-             :class="`${(shift.max - shift.actual) <= 0 ? 'vsc-sp-no-positions' : ''}`"
+             :class="getShiftClasses(shift)"
+             @click="toggleShift(shift)"
              v-for="shift in schedule">
             <div :class="progress-`${calculateProgress(shift)}`"
                  class="vsc-sp-shift-progress">
                 <div class="vsc-sp-label">{{ shift.actual }}{{ divider }}{{ shift.max }}</div>
             </div>
             <div class="vsc-sp-date">{{ shift.date }}</div>
-        </div>
-
-        <div class="shift-wrapper no-space">
-            <div class="shift-progress progress-100">
-                <div class="label">13/13</div>
-            </div>
-            <div class="date">Oct 11</div>
-        </div>
-        <div class="shift-wrapper">
-            <div class="shift-progress progress-45">
-                <div class="label">6/13</div>
-            </div>
-            <div class="date">Oct 18</div>
-        </div>
-        <div class="shift-wrapper">
-            <div class="shift-progress progress-90">
-                <div class="label">12/13</div>
-            </div>
-            <div class="date">Oct 25</div>
-        </div>
-        <div class="shift-wrapper">
-            <div class="shift-progress progress-5">
-                <div class="label">1/13</div>
-            </div>
-            <div class="date">Nov 1</div>
-        </div>
-        <div class="shift-wrapper no-space">
-            <div class="shift-progress progress-100">
-                <div class="label">13/13</div>
-            </div>
-            <div class="date">Nov 8</div>
-        </div>
-        <div class="shift-wrapper">
-            <div class="shift-progress progress-10">
-                <div class="label">10/13</div>
-            </div>
-            <div class="date">Oct 4</div>
-        </div>
-        <div class="shift-wrapper sample-shift selected">
-            <div class="shift-progress progress-45"
-                 style="background-image: linear-gradient(90deg, #e6e7e8 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(168deg, #2196F3 50%, #e6e7e8 50%, #eaeae8);">
-                <div class="label before">2/13</div>
-                <div class="label after">6/13</div>
-            </div>
-            <div class="date">Oct 18</div>
         </div>
     </div>
 </template>
@@ -79,12 +35,43 @@
                 required: false,
                 default : '/',
             },
+            incrementNumber: {
+                type    : Number,
+                required: false,
+                default : 0,
+            },
+        },
+        data() {
+            return {
+                shifts: [],
+            };
         },
         methods: {
+            getShiftClasses(shift) {
+                const noPositions = (shift.max - shift.actual) <= 0 ? 'vsc-sp-no-positions' : '';
+                const isSelected = this.shifts.filter(s => s.id === shift.id).length ? 'vsc-sp-selected' : '';
+
+                return `${noPositions} ${isSelected}`;
+            },
             calculateProgress(shift) {
                 const percentage = (shift.max / 100) * shift.actual;
                 // Round to the closest /5 divider
                 return parseInt(percentage / 5, 0) * 5;
+            },
+            toggleShift(shift) {
+                const idx = this.shifts.indexOf(shift);
+                let incrementNumber = this.incrementNumber;
+
+                if (idx === -1) {
+                    this.shifts.push(shift);
+                } else {
+                    incrementNumber *= -1;
+                    this.shifts.splice(idx, 1);
+                }
+
+                Object.assign(shift, {
+                    actual: shift.actual + incrementNumber,
+                });
             },
         },
     };
@@ -120,7 +107,7 @@
         transition    : background-color .5s;
     }
 
-    .vsc-sp-shift-wrapper.selected .vsc-sp-shift-progress {
+    .vsc-sp-shift-wrapper.vsc-sp-selected .vsc-sp-shift-progress {
         background-image: linear-gradient(90deg, #e6e7e8 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(168deg, #2196F3 50%, #FFEB3B 50%, #FFEB3B) !important;
     }
 
@@ -147,7 +134,7 @@
         border: 1px solid #e6e7e8;
     }
 
-    .vsc-sp-shift-wrapper.selected .vsc-sp-date {
+    .vsc-sp-shift-wrapper.vsc-sp-selected .vsc-sp-date {
         background-color : #03A9F4;
         border-color     : #2196F3;
     }
