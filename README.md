@@ -1,30 +1,37 @@
-# vue-social-components
+### Vue Social Components
 
-> Social components plugin for Vue.js
+##### About
+Vue Social Components is a VueJS package which consists of various [SFC](https://vuejs.org/v2/guide/single-file-components.html) components which could be used on social-network-like websites.
+We build it for our use inside our company but wanted to share with others.
+Please don't hesitate to file any bug/feature requests related to the package.  
+ 
+##### Install
+To install the package, you can run the following command:
+###### Npm
+`npm i -S vue-social-components`
+###### Yarn
+`yarn vue-social-components`
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+##### Use
+In order to use any component all you need is just refer to the component you want, for example:
 ```
+<template>
+    <cover-image></cover-image>
+</template>
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+<script>
+import CoverImage from `vue-social-components/src/components/cover-image`;
+
+export default {
+    components: {
+        CoverImage,
+    },
+};
+</script>
+``` 
+
+##### Contribute
+Any PRs are welcome! Feel free to submit any issues and suggest your creative ideas to make this package even better!
+
+##### License
+The packages is running under `MIT License`. See LICENSE file for details.
