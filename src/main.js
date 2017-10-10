@@ -26,7 +26,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 module.exports = {
-    version: '0.1.1',
+    version: '0.1.2',
     ImageCropper,
     AvatarMedals,
     CoverImage,
