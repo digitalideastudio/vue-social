@@ -15,8 +15,8 @@
                      :style="{'background-image': `url(${item.profile_photo})`}"
                 ></div>
                 <div v-else
-                     class="medallion medallion__no-profile-photo"
                      :style="{'background-color': randomBackgroundColor(item.name, backgroundColors)}"
+                     class="medallion medallion__no-profile-photo"
                 >{{initial(item.name)}}
                 </div>
                 <div class="medallion__tooltip">
@@ -63,19 +63,13 @@
                 type    : [],
                 required: true,
                 default() {
-                    return {
-                        [{  'id'           : 1,
-                            'name'         : 'Sylvester Roch',
-                            'profile_photo': 'https://robohash.org/ullamutquam.png?size=50x50&set=set1',
-                            'email'        : 'sroch0@bbc.co.uk',
-                            'url'          : 'https://bravesites.com'},];
-                    };
+                    return {};
                 },
             },
             size: {
                 type    : Number,
                 required: false,
-                default : 3, //rem
+                default : 3,
             },
             thisCount: {
                 type    : Number,
@@ -88,9 +82,9 @@
                 default : false,
             },
             theme: {
-                type   : String,
+                type    : String,
                 required: false,
-                default: 'primary', // see $colors in _theme.scss
+                default : 'primary', // see $colors in _theme.scss
             },
         },
         data() {
@@ -121,7 +115,6 @@
         methods: {
             cropEmail(email) {
                 const foundPos = email.indexOf('@');
-                console.log('foundPos ', foundPos);
                 if (foundPos === -1) return email;
                 return email.substr(0, foundPos);
             },

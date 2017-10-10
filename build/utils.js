@@ -27,14 +27,14 @@ exports.cssLoaders = function(options) {
             loaders.push({
                 loader : `${loader}-loader`,
                 options: Object.assign({}, loaderOptions, {
-                    sourceMap: options.sourceMap,
+                    sourceMap: opts.sourceMap,
                 }),
             });
         }
 
         // Extract CSS when that option is specified
         // (which is the case during production build)
-        if (options.extract) {
+        if (opts.extract) {
             return ExtractTextPlugin.extract({
                 use     : loaders,
                 fallback: 'vue-style-loader',
